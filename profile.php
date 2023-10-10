@@ -1,12 +1,13 @@
 <?php
-session_start();
-$login = isset($_SESSION['user']);
 
-if (!$login) {
-	header("location: index.php");
-	exit();
-}
+include("vendor/autoload.php");
+
+use Helpers\Auth;
+
+$user = Auth::check();
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,8 +28,8 @@ if (!$login) {
 			</div>
 		<?php endif ?>
 
-		<?php if(file_exists("_actions/photos/profile.jpg")) : ?>
-			<img src="_actions/photos/profile.jpg" alt="img-thumbnail" width="300">
+		<?php if($user->photo) : ?>
+			<img src="_actions/photos/<?= $user->photo ?>" alt="img-thumbnail" width="300">
 		<?php endif ?>
 
 		<form action="_actions/upload.php" method="post" enctype="multipart/form-data" class="input-group my-4">
@@ -37,12 +38,13 @@ if (!$login) {
 		</form>
 
 		<ul class="list-group mb-4">
-			<li class="list-group-item">Name: Alice</li>
-			<li class="list-group-item">Email: alice@gmail.com</li>
-			<li class="list-group-item">Phone: 1651685451561</li>
-			<li class="list-group-item">Address: Some Address</li>
+			<li class="list-group-item">Name: <?= $user->name ?></li>
+			<li class="list-group-item">Email: <?= $user->email ?></li>
+			<li class="list-group-item">Phone: <?= $user->phone ?></li>
+			<li class="list-group-item">Address: <?= $user->address ?></li>
 		</ul>
-		<a href="_actions/logout.php">Logout</a>
+		<a href="_actions/logout.php" class="text-danger ms-1">Logout</a>
+		<a href="admin.php" class="ms-2">Mangae Users</a>
 	</div>
 </body>
 

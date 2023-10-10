@@ -10,9 +10,21 @@
 	<div class="container text-center mt-4" style="max-width: 600px;">
 		<h1 class="h3 mb-4">Login</h1>
 
+		<?php if(isset($_POST['register'])): ?>
+			<div class="alert alert-info mb-3">
+				Register Success
+			</div>
+		<?php endif ?>
+
 		<?php if(isset($_GET['incorrect'])): ?>
 			<div class="alert alert-warning mb-3">
 				Incorrect email or password
+			</div>
+		<?php endif ?>
+
+		<?php if(isset($_GET['suspended'])): ?>
+			<div class="alert alert-warning mb-3">
+				Account Banned.
 			</div>
 		<?php endif ?>
 
